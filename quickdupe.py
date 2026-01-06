@@ -154,7 +154,7 @@ def save_config(config):
         json.dump(config, f)
 
 
-class QuickDCApp:
+class QuickDupeApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Quick Dupe")
@@ -498,6 +498,10 @@ class QuickDCApp:
         # ===== STAY ON TOP CHECKBOX =====
         self.stay_on_top_var = tk.BooleanVar(value=self.config.get("stay_on_top", False))
         ttk.Checkbutton(frame, text="Stay on top", variable=self.stay_on_top_var, command=self.toggle_stay_on_top).pack(anchor='w', padx=10, pady=5)
+
+        # ===== SHOW OVERLAY CHECKBOX =====
+        self.show_overlay_var = tk.BooleanVar(value=self.config.get("show_overlay", True))
+        ttk.Checkbutton(frame, text="Show on-screen text", variable=self.show_overlay_var, command=self.save_settings).pack(anchor='w', padx=10, pady=5)
 
         ttk.Separator(frame, orient='horizontal').pack(fill='x', padx=10, pady=10)
 
@@ -1072,6 +1076,7 @@ class QuickDCApp:
         self.config["dc_inbound"] = self.dc_inbound_var.get()
         # General settings
         self.config["stay_on_top"] = self.stay_on_top_var.get()
+        self.config["show_overlay"] = self.show_overlay_var.get()
         save_config(self.config)
 
     def reset_keydoor_defaults(self):
@@ -1463,10 +1468,9 @@ class QuickDCApp:
         is_disconnected = False
         cycle = 0
 
-        # Use saved drag coordinates
-        drag_start = self.drag_start
-        drag_end = self.drag_end
-        print(f"[TRIGGERNADE] Using drag coords: {drag_start} → {drag_end}")
+        # Use saved drop position
+        drop_pos = self.drag_start
+        print(f"[TRIGGERNADE] Using drop position: {drop_pos}")
 
         # Get the hotkey for direct checking
         hotkey = self.triggernade_hotkey_var.get()
@@ -1539,7 +1543,7 @@ class QuickDCApp:
                 time.sleep(0.300)
 
                 # Move mouse to inventory slot and use Xbox X to drop
-                pynput_mouse.position = drag_start
+                pynput_mouse.position = drop_pos
                 time.sleep(0.020)
 
                 gp = get_gamepad()
@@ -1740,6 +1744,8 @@ class QuickDCApp:
             self.root.after(0, lambda: self.show_overlay("E-Spam stopped."))
 
     def show_overlay(self, text):
+        if not self.show_overlay_var.get():
+            return
         if self.overlay_window is None or not self.overlay_window.winfo_exists():
             self.overlay_window = tk.Toplevel(self.root)
             self.overlay_window.overrideredirect(True)
@@ -1855,7 +1861,7 @@ if __name__ == "__main__":
     print("=" * 50)
 
     root = tk.Tk()
-    app = QuickDCApp(root)
+    app = QuickDupeApp(root)
 
     # Apply stay-on-top setting from config
     if app.config.get("stay_on_top", False):
