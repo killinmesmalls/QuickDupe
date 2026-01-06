@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+build/
+dist/
+*.zip
+*.log
+.claude/
+Videos/
+*.c
+nul
+
