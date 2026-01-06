@@ -934,8 +934,8 @@ class QuickDupeApp:
         # Check ctrl
         if event.state & 0x4:
             parts.append("ctrl")
-        # Check alt - multiple bitmasks for compatibility
-        if event.state & 0x20000 or event.state & 0x8 or event.state & 0x80:
+        # Check alt (0x8 is standard, 0x20000 can false-trigger on some systems)
+        if event.state & 0x8:
             parts.append("alt")
         # Check shift
         if event.state & 0x1:
