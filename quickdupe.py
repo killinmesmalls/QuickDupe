@@ -554,13 +554,13 @@ class QuickDupeApp:
         ttk.Checkbutton(frame, text="Auto (loop until pressed again)", variable=self.throwable_repeat_var, command=self.save_settings).pack(anchor='w', padx=10, pady=5)
 
         # Throwable Timings
-        self.create_slider(frame, "Throw hold time:", "throw_hold_time", 50, 10, 200, "ms")
-        self.create_slider(frame, "Delay before DC:", "throw_dc_delay_before", 0, 0, 200, "ms")
-        self.create_slider(frame, "Wait before E:", "throw_wait_before_e", 400, 0, 2000, "ms")
+        self.create_slider(frame, "Throw hold time:", "throw_hold_time", 45, 10, 200, "ms")
+        self.create_slider(frame, "Delay before DC:", "throw_dc_delay_before", 40, 0, 200, "ms")
+        self.create_slider(frame, "Wait before E:", "throw_wait_before_e", 200, 0, 2000, "ms")
         self.create_slider(frame, "Wait after E:", "throw_wait_after_e", 100, 0, 1000, "ms")
-        self.create_slider(frame, "Wait after Q:", "throw_wait_after_q", 800, 0, 2000, "ms")
-        self.create_slider(frame, "Throws while DC'd:", "throw_dc_count", 11, 1, 30, "")
-        self.create_slider(frame, "Time between throws:", "throw_dc_delay", 100, 10, 500, "ms")
+        self.create_slider(frame, "Wait after Q:", "throw_wait_after_q", 750, 0, 2000, "ms")
+        self.create_slider(frame, "Throws while DC'd:", "throw_dc_count", 12, 1, 30, "")
+        self.create_slider(frame, "Time between throws:", "throw_dc_delay", 86, 10, 500, "ms")
 
         ttk.Button(frame, text="Reset Throwable Defaults", command=self.reset_throwable_defaults).pack(pady=5)
         self.throwable_status_var = tk.StringVar(value="Ready")
@@ -1096,13 +1096,13 @@ class QuickDupeApp:
 
     def reset_throwable_defaults(self):
         """Reset all throwable timing parameters to defaults"""
-        self.throw_hold_time_var.set(50)
-        self.throw_dc_delay_before_var.set(0)
-        self.throw_wait_before_e_var.set(400)
+        self.throw_hold_time_var.set(45)
+        self.throw_dc_delay_before_var.set(40)
+        self.throw_wait_before_e_var.set(200)
         self.throw_wait_after_e_var.set(100)
-        self.throw_wait_after_q_var.set(800)
-        self.throw_dc_count_var.set(11)
-        self.throw_dc_delay_var.set(100)
+        self.throw_wait_after_q_var.set(750)
+        self.throw_dc_count_var.set(12)
+        self.throw_dc_delay_var.set(86)
         self.save_settings()
         print("[RESET] Throwable parameters reset to defaults")
 
